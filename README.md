@@ -31,7 +31,7 @@ Terraform 0.12 is deprecated.
 
 ```hcl
 module "app_ecs_service" {
-  source = "trussworks/ecs-service/aws"
+  source = "mesmeromair/ecs-service/aws"
 
   name        = "app"
   environment = "prod"
@@ -59,7 +59,7 @@ module "app_ecs_service" {
 
 ```hcl
 module "app_ecs_service" {
-  source = "trussworks/ecs-service/aws"
+  source = "mesmeromair/ecs-service/aws"
 
   name        = "app"
   environment = "prod"
@@ -88,7 +88,7 @@ module "app_ecs_service" {
 
 ```hcl
 module "app_ecs_service" {
-  source = "trussworks/ecs-service/aws"
+  source = "mesmeromair/ecs-service/aws"
 
   name        = "app"
   environment = "prod"
@@ -184,7 +184,7 @@ No modules.
 | <a name="input_manage_ecs_security_group"></a> [manage\_ecs\_security\_group](#input\_manage\_ecs\_security\_group) | Enable creation and management of the ECS security group and rules | `bool` | `true` | no |
 | <a name="input_name"></a> [name](#input\_name) | The service name. | `string` | n/a | yes |
 | <a name="input_nlb_subnet_cidr_blocks"></a> [nlb\_subnet\_cidr\_blocks](#input\_nlb\_subnet\_cidr\_blocks) | List of Network Load Balancer (NLB) CIDR blocks to allow traffic from. | `list(string)` | `[]` | no |
-| <a name="input_service_registries"></a> [service\_registries](#input\_service\_registries) | List of service registry objects as per <https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1>. List can only have a single object until <https://github.com/terraform-providers/terraform-provider-aws/issues/9573> is resolved. | <pre>list(object({<br>    registry_arn   = string<br>    container_name = string<br>    container_port = number<br>    port           = number<br>  }))</pre> | `[]` | no |
+| <a name="input_service_registries"></a> [service\_registries](#input\_service\_registries) | List of service registry objects as per <https://www.terraform.io/docs/providers/aws/r/ecs_service.html#service_registries-1>. List can only have a single object until <https://github.com/terraform-providers/terraform-provider-aws/issues/9573> is resolved. | <pre>list(object({<br>    registry_arn   = string<br>    container_name = string<br>    container_port = number<br>  }))</pre> | `[]` | no |
 | <a name="input_target_container_name"></a> [target\_container\_name](#input\_target\_container\_name) | Name of the container the Load Balancer should target. Default: {name}-{environment} | `string` | `""` | no |
 | <a name="input_tasks_desired_count"></a> [tasks\_desired\_count](#input\_tasks\_desired\_count) | The number of instances of a task definition. | `number` | `1` | no |
 | <a name="input_tasks_maximum_percent"></a> [tasks\_maximum\_percent](#input\_tasks\_maximum\_percent) | Upper limit on the number of running tasks. | `number` | `200` | no |
@@ -264,7 +264,7 @@ Below is an example of how the module would be instantiated prior to version 3.0
 
 ```hcl
 module "app_ecs_service" {
-  source = "trussworks/ecs-service/aws"
+  source = "mesmeromair/ecs-service/aws"
   ...
   container_port                  = 8443
   container_health_check_port     = 8080
@@ -277,7 +277,7 @@ In 3.0.0 the same example will look like the following
 
 ```hcl
 module "app_ecs_service" {
-  source = "trussworks/ecs-service/aws"
+  source = "mesmeromair/ecs-service/aws"
   ...
   lb_target_groups =
   [
