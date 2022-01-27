@@ -217,7 +217,6 @@ variable "service_registries" {
   type = list(object({
     registry_arn   = string
     container_name = string
-    container_port = number
   }))
   default = []
 }
