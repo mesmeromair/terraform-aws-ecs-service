@@ -448,16 +448,6 @@ resource "aws_ecs_task_definition" "main" {
   execution_role_arn       = join("", aws_iam_role.task_execution_role.*.arn)
 
   container_definitions = var.container_definitions == "" ? local.default_container_definitions : var.container_definitions
-
-  lifecycle {
-    ignore_changes = [
-      requires_compatibilities,
-      cpu,
-      memory,
-      execution_role_arn,
-      container_definitions,
-    ]
-  }
 }
 
 # Create a data source to pull the latest active revision from
