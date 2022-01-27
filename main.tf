@@ -544,7 +544,6 @@ resource "aws_ecs_service" "main" {
       registry_arn   = service_registries.value.registry_arn
       container_name = service_registries.value.container_name
       container_port = service_registries.value.container_port
-      port           = service_registries.value.port
     }
   }
 }
