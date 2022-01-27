@@ -547,8 +547,4 @@ resource "aws_ecs_service" "main" {
       port           = service_registries.value.port
     }
   }
-
-  lifecycle {
-    ignore_changes = [task_definition]
-  }
 }
