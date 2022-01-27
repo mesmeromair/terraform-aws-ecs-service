@@ -218,7 +218,6 @@ variable "service_registries" {
     registry_arn   = string
     container_name = string
     container_port = number
-    port           = number
   }))
   default = []
 }
