@@ -5,32 +5,12 @@ output "ecs_security_group_id" {
 
 output "task_execution_role_arn" {
   description = "The ARN of the task execution role that the Amazon ECS container agent and the Docker daemon can assume."
-  value       = join("", aws_iam_role.task_execution_role.*.arn)
-}
-
-output "task_execution_role_name" {
-  description = "The name of the task execution role that the Amazon ECS container agent and the Docker daemon can assume."
-  value       = join("", aws_iam_role.task_execution_role.*.name)
+  value       = aws_ecs_task_definition.main.execution_role_arn
 }
 
 output "task_role_arn" {
   description = "The ARN of the IAM role assumed by Amazon ECS container tasks."
-  value       = aws_iam_role.task_role.arn
-}
-
-output "task_role_name" {
-  description = "The name of the IAM role assumed by Amazon ECS container tasks."
-  value       = aws_iam_role.task_role.name
-}
-
-output "task_role" {
-  description = "The IAM role object assumed by Amazon ECS container tasks."
-  value       = aws_iam_role.task_role
-}
-
-output "task_execution_role" {
-  description = "The role object of the task execution role that the Amazon ECS container agent and the Docker daemon can assume."
-  value       = aws_iam_role.task_execution_role
+  value       = aws_ecs_task_definition.main.task_role_arn
 }
 
 output "task_definition_arn" {
