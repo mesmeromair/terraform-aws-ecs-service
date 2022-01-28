@@ -158,6 +158,18 @@ variable "target_container_name" {
   type        = string
 }
 
+variable "task_role_arn" {
+  description = "Arn of the task role"
+  default     = ""
+  type        = string
+}
+
+variable "execution_role_arn" {
+  description = "Arn of the execution role"
+  default     = ""
+  type        = string
+}
+
 variable "associate_alb" {
   description = "Whether to associate an Application Load Balancer (ALB) with the ECS service."
   default     = false
