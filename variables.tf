@@ -250,3 +250,9 @@ variable "ecs_exec_enable" {
   default     = false
   type        = bool
 }
+
+variable "force_new_deployment" {
+  description = "Enable to force a new task deployment"
+  default     = false
+  type        = bool
+}
