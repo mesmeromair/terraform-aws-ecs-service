@@ -92,6 +92,12 @@ variable "ecs_subnet_ids" {
   type        = list(string)
 }
 
+variable "ecs_create_task_execution_role" {
+  description = "Set to true to create ecs task execution role to ECS Tasks."
+  type        = bool
+  default     = false
+}
+
 variable "ec2_create_task_execution_role" {
   description = "Set to true to create ecs task execution role to ECS EC2 Tasks."
   type        = bool
