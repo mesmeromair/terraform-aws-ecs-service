@@ -323,7 +323,7 @@ data "aws_iam_policy_document" "task_execution_role_policy_doc" {
   # if ecs_use_fargate is True, create aws_iam_role_policy resource
   # if ecs_use_fargate is False, check whether value of ec2_create_task_execution_role is True/False.
   # if True, set to 1 creating the resource, if False, set to 0, not creating the resource
-  count = var.ecs_use_fargate ? (var.execution_role_arn == "" ? 1 : 0) : var.ec2_create_task_execution_role ? 1 : 0
+  count = var.ecs_use_fargate ? (var.ecs_create_task_execution_role ? 1 : 0) : (var.ec2_create_task_execution_role ? 1 : 0)
   statement {
     actions = [
       "logs:CreateLogStream",
@@ -353,7 +353,7 @@ data "aws_iam_policy_document" "task_execution_role_policy_doc" {
 }
 
 resource "aws_iam_role" "task_role" {
-  count              = var.task_role_arn == "" ? 1 : 0
+  count              = var.ecs_use_fargate ? (var.ecs_create_task_execution_role ? 1 : 0) : (var.ec2_create_task_execution_role ? 1 : 0)
   name               = "ecs-task-role-${var.name}-${var.environment}"
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_role_policy.json
 }
@@ -362,7 +362,7 @@ resource "aws_iam_role" "task_execution_role" {
   # if ecs_use_fargate is True, create aws_iam_role resource
   # if ecs_use_fargate is False, check whether value of ec2_create_task_execution_role is True/False.
   # if True, set to 1 creating the resource, if False, set to 0, not creating the resource
-  count = var.ecs_use_fargate ? (var.execution_role_arn == "" ? 1 : 0) : var.ec2_create_task_execution_role ? 1 : 0
+  count = var.ecs_use_fargate ? (var.ecs_create_task_execution_role ? 1 : 0) : (var.ec2_create_task_execution_role ? 1 : 0)
 
   name               = "ecs-task-execution-role-${var.name}-${var.environment}"
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_role_policy.json
@@ -372,7 +372,7 @@ resource "aws_iam_role_policy" "task_execution_role_policy" {
   # if ecs_use_fargate is True, create aws_iam_role_policy resource
   # if ecs_use_fargate is False, check whether value of ec2_create_task_execution_role is True/False.
   # if True, set to 1 creating the resource, if False, set to 0, not creating the resource
-  count = var.ecs_use_fargate ? (var.execution_role_arn == "" ? 1 : 0) : var.ec2_create_task_execution_role ? 1 : 0
+  count = var.ecs_use_fargate ? (var.ecs_create_task_execution_role ? 1 : 0) : (var.ec2_create_task_execution_role ? 1 : 0)
 
   name   = "${aws_iam_role.task_execution_role[0].name}-policy"
   role   = aws_iam_role.task_execution_role[0].name
@@ -384,7 +384,7 @@ resource "aws_iam_role_policy" "task_execution_role_policy" {
 #
 
 data "aws_iam_policy_document" "task_role_ecs_exec" {
-  count = var.ecs_exec_enable && var.task_role_arn == "" ? 1 : 0
+  count = var.ecs_exec_enable ? 1 : 0
   statement {
     sid    = "AllowECSExec"
     effect = "Allow"
@@ -420,14 +420,14 @@ data "aws_iam_policy_document" "task_role_ecs_exec" {
 }
 
 resource "aws_iam_policy" "task_role_ecs_exec" {
-  count       = var.ecs_exec_enable && var.task_role_arn == "" ? 1 : 0
+  count       = var.ecs_exec_enable == "" ? 1 : 0
   name        = "${aws_iam_role.task_role[0].name}-ecs-exec"
   description = "Allow ECS Exec with Cloudwatch logging when attached to an ECS task role"
   policy      = join("", data.aws_iam_policy_document.task_role_ecs_exec[0].*.json)
 }
 
 resource "aws_iam_role_policy_attachment" "task_role_ecs_exec" {
-  count      = var.ecs_exec_enable && var.task_role_arn == "" ? 1 : 0
+  count      = var.ecs_exec_enable == "" ? 1 : 0
   role       = join("", aws_iam_role.task_role[0].*.name)
   policy_arn = join("", aws_iam_policy.task_role_ecs_exec[0].*.arn)
 }
